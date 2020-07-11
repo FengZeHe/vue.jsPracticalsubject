@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>购物车plus</title>
+    <link rel="stylesheet" href="./index.css">
+
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <template v-if="list.length">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>全选
+                            <input type="checkbox" @click='checkAll'>
+                        </th>
+                        <th>商品名称</th>
+                        <th>商品单价</th>
+                        <th>数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template v-for="(title,index1) in list">
+                        <tr>
+                            <th>{{title.title_name}}</th>
+                        </tr>
+                        <tr v-for="(item,index2) in title.content">
+                            <td></td>
+                            <td>
+                                <input type="checkbox" @click="check(index1,index2)" :checked="item.check">
+                            </td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.price}}</td>
+                            <td>
+                                <button @click="handleReduce(index1,index2)" :disabled="item.count === 1">-</button>
+                                {{item.count}}
+                                <button @click="handleAdd(index1,index2)">+</button>
+                            </td>
+                            <td>
+                                <button @click="handleRemove(index1,index2)">移除</button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div>总价{{totalPrice}}</div>
+            <div><button @click="buy" class="buy">结账</button></div>
+        </template>
+        <div v-else>购物车是空的</div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./index.js"></script>
+
+</html>
